@@ -1,0 +1,195 @@
+{% extends 'hospital/admin_base.html' %}
+{% block content %}
+
+<style>
+  .dashboard-container {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .stats-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .stat-card {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+  }
+
+  .doctors-card::before { background: linear-gradient(to right, #4facfe, #00f2fe); }
+  .patients-card::before { background: linear-gradient(to right, #43e97b, #38f9d7); }
+  .appointments-card::before { background: linear-gradient(to right, #fa709a, #fee140); }
+  .volunteers-card::before { background: linear-gradient(to right, #6a11cb, #2575fc); }
+
+  .stat-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(45deg, #2c3e50, #3498db);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .stat-label {
+    font-size: 1.1rem;
+    color: #718096;
+    font-weight: 500;
+  }
+
+  .stat-icon {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 2.5rem;
+    opacity: 0.1;
+  }
+
+  .recent-activity {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+  }
+
+  .activity-header {
+    font-size: 1.5rem;
+    color: #2d3748;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #edf2f7;
+  }
+
+  .activity-list {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .activity-item {
+    padding: 1rem;
+    border-radius: 10px;
+    background: #f8fafc;
+    transition: transform 0.2s ease;
+  }
+
+  .activity-item:hover {
+    transform: translateX(5px);
+    background: #f1f5f9;
+  }
+
+  .activity-title {
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 0.5rem;
+  }
+
+  .activity-meta {
+    font-size: 0.875rem;
+    color: #718096;
+  }
+
+  .developer-credit {
+    text-align: center;
+    font-size: 0.75rem;
+    color: #a0aec0;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #edf2f7;
+  }
+
+  @media (max-width: 768px) {
+    .dashboard-container {
+      padding: 1rem;
+    }
+
+    .stats-overview {
+      grid-template-columns: 1fr;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+    }
+  }
+</style>
+
+<div class="dashboard-container">
+  <!-- Statistics Overview -->
+  <div class="stats-overview">
+    <div class="stat-card doctors-card">
+      <i class="fas fa-user-md stat-icon"></i>
+      <div class="stat-value">{{ doctor_count }}</div>
+      <div class="stat-label">Total Doctors</div>
+    </div>
+
+    <div class="stat-card patients-card">
+      <i class="fas fa-procedures stat-icon"></i>
+      <div class="stat-value">{{ patient_count }}</div>
+      <div class="stat-label">Total Patients</div>
+    </div>
+
+    <div class="stat-card appointments-card">
+      <i class="fas fa-calendar-check stat-icon"></i>
+      <div class="stat-value">{{ appointment_count }}</div>
+      <div class="stat-label">Total Appointments</div>
+    </div>
+
+    <div class="stat-card volunteers-card">
+      <i class="fas fa-hands-helping stat-icon"></i>
+      <div class="stat-value">{{ volunteer_count }}</div>
+      <div class="stat-label">Total Volunteers</div>
+    </div>
+  </div>
+
+  <!-- Recent Activity -->
+  <div class="recent-activity">
+    <h2 class="activity-header">Recent Activity</h2>
+    <div class="activity-list">
+      {% for appointment in appointments %}
+      <div class="activity-item">
+        <div class="activity-title">
+          {{ appointment.patient_name }} - {{ appointment.doctor_name }}
+        </div>
+        <div class="activity-meta">
+          <i class="far fa-calendar-alt"></i> {{ appointment.appointment_date }}
+          <i class="far fa-clock ml-2"></i> {{ appointment.appointment_time }}
+          {% if appointment.status %}
+          <span class="badge badge-success ml-2">Confirmed</span>
+          {% else %}
+          <span class="badge badge-warning ml-2">Pending</span>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Developer Credit -->
+  <div class="developer-credit">
+    Developed by Leo
+  </div>
+</div>
+
+{% endblock content %}

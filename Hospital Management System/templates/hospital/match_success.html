@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match Success</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="alert alert-success">
+            <h4 class="alert-heading">Success!</h4>
+            {% if match_type == 'volunteer-patient' %}
+                <p>Congratulations, a volunteer-patient match has been made!</p>
+            {% elif match_type == 'common-language' %}
+                <p>Congratulations, a common language match has been made!</p>
+            {% else %}
+                <p>{{ message }}</p>
+            {% endif %}
+            <hr>
+            <a href="{% url 'admin-dashboard' %}" class="btn btn-primary">Go to Dashboard</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,114 @@
+{% extends 'hospital/homebase.html' %}
+<!--
+Developed By : Leo
+-->
+
+{% block content %}
+
+<style>
+  .hero-section {
+    background: linear-gradient(135deg, #2c3e50, #3498db);
+    color: white;
+    padding: 4rem 0;
+    border-radius: 0 0 2rem 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .card-custom {
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    margin-bottom: 2rem;
+  }
+
+  .card-custom:hover {
+    transform: translateY(-5px);
+  }
+
+  .btn-custom {
+    border-radius: 2rem;
+    padding: 0.75rem 2rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+  }
+
+  .btn-register {
+    background: #2ecc71;
+    border: none;
+  }
+
+  .btn-register:hover {
+    background: #27ae60;
+    transform: scale(1.05);
+  }
+
+  .btn-login {
+    background: #3498db;
+    border: none;
+  }
+
+  .btn-login:hover {
+    background: #2980b9;
+    transform: scale(1.05);
+  }
+
+  .feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #3498db;
+  }
+</style>
+
+<div class="hero-section">
+  <div class="container text-center">
+    <h1 class="display-4 mb-3">Your Health, Our Priority</h1>
+    <p class="lead mb-4">Access quality healthcare services with ease and convenience</p>
+    <div class="d-flex justify-content-center gap-3">
+      <a href="/patientsignup" class="btn btn-custom btn-register">Register Now</a>
+      <a href="/patientlogin" class="btn btn-custom btn-login">Login</a>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-md-4">
+      <div class="card card-custom">
+        <div class="card-body text-center">
+          <div class="feature-icon">
+            <i class="fas fa-calendar-check"></i>
+          </div>
+          <h3>Easy Appointments</h3>
+          <p>Book and manage your medical appointments online</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card card-custom">
+        <div class="card-body text-center">
+          <div class="feature-icon">
+            <i class="fas fa-file-medical"></i>
+          </div>
+          <h3>Medical Records</h3>
+          <p>Access your medical history and test results securely</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card card-custom">
+        <div class="card-body text-center">
+          <div class="feature-icon">
+            <i class="fas fa-comments"></i>
+          </div>
+          <h3>Direct Communication</h3>
+          <p>Stay connected with your healthcare providers</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

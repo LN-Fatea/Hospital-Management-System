@@ -1,0 +1,41 @@
+{% extends 'hospital/homebase.html' %}
+{% block content %}
+<form class="jumbotron" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <h1 class="display-4">Hello, Volunteer</h1>
+  <p class="lead">Sign Up Here</p>
+  <hr class="my-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Personal Information</h5>
+            {% for field in userForm %}
+            <div class="form-group">
+              <label for="{{ field.id_for_label }}">{{field.label}}</label>
+              {{ field }}
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Additional Information</h5>
+            {% for field in volunteerForm %}
+            <div class="form-group">
+              <label for="{{ field.id_for_label }}">{{field.label}}</label>
+              {{ field }}
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary">Sign Up</button>
+  </div>
+</form>
+{% endblock content %}

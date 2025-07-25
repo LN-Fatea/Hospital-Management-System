@@ -1,0 +1,45 @@
+{% extends 'hospital/admin_base.html' %}
+{% block content %}
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Volunteer Approvals</h5>
+      {% if volunteers %}
+      <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Profile</th>
+              <th scope="col">Mobile</th>
+              <th scope="col">Address</th>
+              <th scope="col">Department</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for v in volunteers %}
+            <tr>
+              <td>{{v.get_name}}</td>
+              <td><img src="{% if v.profile_pic %}{{v.profile_pic.url}}{% endif %}" alt="Profile Pic" height="40px" width="40px" /></td>
+              <td>{{v.mobile}}</td>
+              <td>{{v.address}}</td>
+              <td>{{v.department}}</td>
+              <td>
+                <a class="btn btn-success btn-sm" href="{% url 'approve-volunteer' v.id %}">Approve</a>
+                <a class="btn btn-danger btn-sm" href="{% url 'reject-volunteer' v.id %}">Reject</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="alert alert-info">
+        No pending volunteer approvals.
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock content %}

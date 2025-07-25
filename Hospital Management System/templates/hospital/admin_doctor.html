@@ -1,0 +1,355 @@
+{% extends 'hospital/admin_base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="dashboard">
+  <!-- Header Section -->
+  <div class="dashboard-header">
+    <h1 class="gradient-text">Doctor Management</h1>
+    <p class="subtitle">Manage and coordinate hospital doctors</p>
+  </div>
+
+  <!-- Stats Overview -->
+  <div class="stats-container">
+    <div class="stat-card">
+      <i class="fas fa-user-md stat-icon"></i>
+      <div class="stat-content">
+        <h3>Total Doctors</h3>
+        <p class="stat-number">{{ total_doctors }}</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <i class="fas fa-clock stat-icon"></i>
+      <div class="stat-content">
+        <h3>Pending Approvals</h3>
+        <p class="stat-number">{{ pending_approvals }}</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <i class="fas fa-calendar-check stat-icon"></i>
+      <div class="stat-content">
+        <h3>Active Today</h3>
+        <p class="stat-number">{{ active_doctors }}</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <i class="fas fa-procedures stat-icon"></i>
+      <div class="stat-content">
+        <h3>Total Patients</h3>
+        <p class="stat-number">{{ total_patients }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="quick-actions">
+    <h2>Quick Actions</h2>
+    <div class="action-grid">
+      <a href="/admin-view-doctor" class="action-card">
+        <div class="card-content">
+          <div class="card-icon-wrapper">
+            <i class="fas fa-list"></i>
+          </div>
+          <h3>View Doctors</h3>
+          <p>View and manage doctor records</p>
+          <ul class="feature-list">
+            <li><i class="fas fa-check"></i> View all doctor profiles</li>
+            <li><i class="fas fa-check"></i> Update doctor information</li>
+            <li><i class="fas fa-check"></i> Monitor performance</li>
+          </ul>
+        </div>
+      </a>
+
+      <a href="/admin-add-doctor" class="action-card">
+        <div class="card-content">
+          <div class="card-icon-wrapper">
+            <i class="fas fa-user-plus"></i>
+          </div>
+          <h3>Add Doctor</h3>
+          <p>Register a new doctor</p>
+          <ul class="feature-list">
+            <li><i class="fas fa-check"></i> Quick registration</li>
+            <li><i class="fas fa-check"></i> Department assignment</li>
+            <li><i class="fas fa-check"></i> Set schedules</li>
+          </ul>
+        </div>
+      </a>
+
+      <a href="/admin-approve-doctor" class="action-card">
+        <div class="card-content">
+          <div class="card-icon-wrapper">
+            <i class="fas fa-user-check"></i>
+          </div>
+          <h3>Approve Doctors</h3>
+          <p>Review and approve applications</p>
+          <ul class="feature-list">
+            <li><i class="fas fa-check"></i> Verify credentials</li>
+            <li><i class="fas fa-check"></i> Check references</li>
+            <li><i class="fas fa-check"></i> Process documents</li>
+          </ul>
+        </div>
+      </a>
+
+      <a href="/admin-view-doctor-specialisation" class="action-card">
+        <div class="card-content">
+          <div class="card-icon-wrapper">
+            <i class="fas fa-stethoscope"></i>
+          </div>
+          <h3>Specializations</h3>
+          <p>View doctors by specialty</p>
+          <ul class="feature-list">
+            <li><i class="fas fa-check"></i> Department overview</li>
+            <li><i class="fas fa-check"></i> Specialty distribution</li>
+            <li><i class="fas fa-check"></i> Resource planning</li>
+          </ul>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Department Distribution -->
+  <div class="department-stats">
+    <h2>Department Distribution</h2>
+    <div class="department-grid">
+      {% for dept in departments %}
+      <div class="department-card">
+        <div class="dept-icon">
+          <i class="fas fa-hospital-user"></i>
+        </div>
+        <div class="dept-info">
+          <h4>{{ dept.name }}</h4>
+          <p>{{ dept.count }} Doctors</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<style>
+  .dashboard {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .dashboard-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .gradient-text {
+    background: linear-gradient(45deg, #2c3e50, #3498db);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .subtitle {
+    color: #7f8c8d;
+    font-size: 1.1rem;
+  }
+
+  /* Stats Section */
+  .stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .stat-card {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .stat-icon {
+    font-size: 2rem;
+    color: #3498db;
+    background: #f0f7ff;
+    padding: 1rem;
+    border-radius: 12px;
+  }
+
+  .stat-content h3 {
+    font-size: 1rem;
+    color: #7f8c8d;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-number {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2c3e50;
+    margin: 0;
+  }
+
+  /* Quick Actions */
+  .quick-actions {
+    margin-bottom: 3rem;
+  }
+
+  .quick-actions h2 {
+    font-size: 1.8rem;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+  }
+
+  .action-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+
+  .action-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .action-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .card-content {
+    padding: 2rem;
+  }
+
+  .card-icon-wrapper {
+    width: 60px;
+    height: 60px;
+    background: #f0f7ff;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .card-icon-wrapper i {
+    font-size: 1.5rem;
+    color: #3498db;
+  }
+
+  .action-card h3 {
+    color: #2c3e50;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .action-card p {
+    color: #7f8c8d;
+    margin-bottom: 1.5rem;
+  }
+
+  .feature-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 0;
+  }
+
+  .feature-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #7f8c8d;
+    margin-bottom: 0.5rem;
+  }
+
+  .feature-list li i {
+    color: #2ecc71;
+    font-size: 0.9rem;
+  }
+
+  /* Department Stats */
+  .department-stats {
+    margin-bottom: 3rem;
+  }
+
+  .department-stats h2 {
+    font-size: 1.8rem;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+  }
+
+  .department-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .department-card {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .dept-icon {
+    width: 50px;
+    height: 50px;
+    background: #f0f7ff;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #3498db;
+  }
+
+  .dept-info {
+    flex: 1;
+  }
+
+  .dept-info h4 {
+    color: #2c3e50;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .dept-info p {
+    color: #7f8c8d;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .dashboard {
+      padding: 1rem;
+    }
+
+    .gradient-text {
+      font-size: 2rem;
+    }
+
+    .stats-container {
+      grid-template-columns: 1fr;
+    }
+
+    .action-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .department-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+{% endblock content %}

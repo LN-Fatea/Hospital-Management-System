@@ -1,0 +1,95 @@
+{% extends 'hospital/admin_base.html' %}
+{% block content %}
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Volunteers</h5>
+      <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Profile</th>
+              <th scope="col">Mobile</th>
+              <th scope="col">Address</th>
+              <th scope="col">Department</th>
+              <th scope="col">Language</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for v in volunteers %}
+            <tr>
+              <td>{{v.get_name}}</td>
+              <td>
+                <img src="{% if v.profile_pic %}{{v.profile_pic.url}}{% endif %}" 
+                     alt="Profile Pic" 
+                     class="rounded-circle"
+                     height="40px" 
+                     width="40px" />
+              </td>
+              <td>{{v.mobile}}</td>
+              <td>{{v.address}}</td>
+              <td>{{v.department}}</td>
+              <td>{{ v.language }}</td>
+              <td>
+                <a class="btn btn-primary btn-sm" href="{% url 'update-volunteer' v.id %}">
+                  <i class="fas fa-edit"></i> Update
+                </a>
+                <a class="btn btn-danger btn-sm" href="{% url 'delete-volunteer-from-hospital' v.id %}">
+                  <i class="fas fa-trash"></i> Delete
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    margin: 20px 0;
+  }
+  
+  .card-title {
+    color: #2c3e50;
+    font-weight: bold;
+    margin-bottom: 20px;
+    padding: 10px 0;
+  }
+  
+  .table {
+    margin-bottom: 0;
+  }
+  
+  .table thead th {
+    background-color: #34495e;
+    color: white;
+    border: none;
+  }
+  
+  .table td, .table th {
+    vertical-align: middle;
+    padding: 12px;
+  }
+  
+  .btn {
+    margin: 2px;
+  }
+  
+  .btn-sm {
+    padding: 5px 10px;
+  }
+  
+  .rounded-circle {
+    object-fit: cover;
+    border: 2px solid #eee;
+  }
+</style>
+{% endblock content %}

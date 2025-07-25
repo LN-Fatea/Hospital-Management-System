@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hospital Management System - Admin</title>
+  
+  <!-- Custom fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-color: #2c3e50;
+      --secondary-color: #3498db;
+      --accent-color: #e74c3c;
+      --background-color: #f8f9fa;
+      --text-color: #2c3e50;
+      --sidebar-width: 250px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: var(--background-color);
+      color: var(--text-color);
+    }
+
+    /* Sidebar Styling */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: var(--sidebar-width);
+      background: var(--primary-color);
+      padding: 20px;
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+
+    .sidebar header {
+      position: relative;
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 20px;
+    }
+
+    .sidebar header h3 {
+      color: white;
+      font-size: 1.5rem;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      margin: 10px 0;
+    }
+
+    .sidebar ul li a {
+      display: flex;
+      align-items: center;
+      padding: 12px 15px;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar ul li a:hover {
+      background: rgba(255,255,255,0.1);
+      transform: translateX(5px);
+    }
+
+    .sidebar ul li a i {
+      min-width: 30px;
+      font-size: 1.2rem;
+      margin-right: 10px;
+    }
+
+    /* Main Content Area */
+    .main-content {
+      margin-left: var(--sidebar-width);
+      padding: 20px;
+      min-height: 100vh;
+      transition: all 0.3s ease;
+      padding-bottom: 60px;
+    }
+
+    /* Card Styling */
+    .card {
+      background: white;
+      border-radius: 15px;
+      border: none;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+    }
+
+    .card-header {
+      background: var(--primary-color);
+      color: white;
+      border-bottom: none;
+      padding: 15px 20px;
+    }
+
+    .card-body {
+      padding: 20px;
+    }
+
+    /* Button Styling */
+    .btn {
+      border-radius: 8px;
+      padding: 8px 20px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background: var(--secondary-color);
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background: #2980b9;
+      transform: translateY(-2px);
+    }
+
+    /* Table Styling */
+    .table {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .table thead th {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 15px;
+    }
+
+    .table td {
+      padding: 12px 15px;
+      vertical-align: middle;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--secondary-color);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #2980b9;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 0;
+        padding: 0;
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+
+      .sidebar.active {
+        width: var(--sidebar-width);
+        padding: 20px;
+      }
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      padding: 10px;
+      background-color: var(--primary-color);
+      color: white;
+      text-align: center;
+      font-size: 0.9rem;
+      z-index: 999;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <header>
+      <h3>Hospital Admin</h3>
+    </header>
+    <ul>
+      <li>
+        <a href="/admin-dashboard">
+          <i class="fas fa-chart-line"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a href="/admin-doctor">
+          <i class="fas fa-user-md"></i>
+          <span>Doctors</span>
+        </a>
+      </li>
+      <li>
+        <a href="/admin-patient">
+          <i class="fas fa-procedures"></i>
+          <span>Patients</span>
+        </a>
+      </li>
+      <li>
+        <a href="/admin-appointment">
+          <i class="fas fa-calendar-check"></i>
+          <span>Appointments</span>
+        </a>
+      </li>
+      <li>
+        <a href="/admin-volunteer">
+          <i class="fas fa-hands-helping"></i>
+          <span>Volunteers</span>
+        </a>
+      </li>
+      <li>
+        <a href="/logout">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Logout</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    {% block content %}
+    {% endblock content %}
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container text-center">
+      <p>Made in Canada | Developed by Leo</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+  <script>
+    // Toggle sidebar
+    document.querySelector('.sidebar-toggle').addEventListener('click', function() {
+      document.querySelector('.sidebar').classList.toggle('collapsed');
+      document.querySelector('.main-content').classList.toggle('expanded');
+    });
+  </script>
+</body>
+</html>

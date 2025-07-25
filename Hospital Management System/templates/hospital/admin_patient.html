@@ -1,0 +1,357 @@
+{% extends 'hospital/admin_base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="dashboard">
+  <!-- Header Section -->
+  <div class="dashboard-header">
+    <h1 class="gradient-text">Patient Management</h1>
+    <p class="subtitle">Manage and monitor hospital patients</p>
+  </div>
+
+  <!-- Stats Overview -->
+  <div class="stats-container">
+    <div class="stat-card">
+      <i class="fas fa-procedures stat-icon"></i>
+      <div class="stat-content">
+        <h3>Total Patients</h3>
+        <p class="stat-number">{{ total_patients }}</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <i class="fas fa-calendar-check stat-icon"></i>
+      <div class="stat-content">
+        <h3>Active Admissions</h3>
+        <p class="stat-number">{{ active_admissions }}</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <i class="fas fa-calendar-day stat-icon"></i>
+      <div class="stat-content">
+        <h3>Today's Appointments</h3>
+        <p class="stat-number">{{ todays_appointments }}</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <i class="fas fa-clock stat-icon"></i>
+      <div class="stat-content">
+        <h3>Pending Discharges</h3>
+        <p class="stat-number">{{ pending_discharges }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="quick-actions">
+    <h2>Quick Actions</h2>
+    <div class="action-grid">
+      <a href="/admin-view-patient" class="action-card">
+        <div class="card-content">
+          <div class="card-icon-wrapper">
+            <i class="fas fa-list"></i>
+          </div>
+          <h3>View Patients</h3>
+          <p>View and manage patient records</p>
+          <ul class="feature-list">
+            <li><i class="fas fa-check"></i> Access medical history</li>
+            <li><i class="fas fa-check"></i> View appointments</li>
+            <li><i class="fas fa-check"></i> Track treatments</li>
+          </ul>
+        </div>
+      </a>
+
+      <a href="/admin-add-patient" class="action-card">
+        <div class="card-content">
+          <div class="card-icon-wrapper">
+            <i class="fas fa-user-plus"></i>
+          </div>
+          <h3>Admit Patient</h3>
+          <p>Register a new patient</p>
+          <ul class="feature-list">
+            <li><i class="fas fa-check"></i> Quick registration</li>
+            <li><i class="fas fa-check"></i> Assign doctor</li>
+            <li><i class="fas fa-check"></i> Schedule appointments</li>
+          </ul>
+        </div>
+      </a>
+
+      <a href="/admin-approve-patient" class="action-card">
+        <div class="card-content">
+          <div class="card-icon-wrapper">
+            <i class="fas fa-clipboard-check"></i>
+          </div>
+          <h3>Patient Approvals</h3>
+          <p>Review patient applications</p>
+          <ul class="feature-list">
+            <li><i class="fas fa-check"></i> Verify information</li>
+            <li><i class="fas fa-check"></i> Process insurance</li>
+            <li><i class="fas fa-check"></i> Approve admissions</li>
+          </ul>
+        </div>
+      </a>
+
+      <a href="/admin-discharge-patient" class="action-card">
+        <div class="card-content">
+          <div class="card-icon-wrapper">
+            <i class="fas fa-walking"></i>
+          </div>
+          <h3>Discharge Management</h3>
+          <p>Process patient discharges</p>
+          <ul class="feature-list">
+            <li><i class="fas fa-check"></i> Review discharge requests</li>
+            <li><i class="fas fa-check"></i> Generate bills</li>
+            <li><i class="fas fa-check"></i> Schedule follow-ups</li>
+          </ul>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Recent Activity -->
+  <div class="recent-activity">
+    <h2>Recent Activity</h2>
+    <div class="activity-list">
+      {% for activity in recent_activities %}
+      <div class="activity-card">
+        <div class="activity-icon">
+          <i class="{{ activity.icon }}"></i>
+        </div>
+        <div class="activity-content">
+          <h4>{{ activity.title }}</h4>
+          <p>{{ activity.description }}</p>
+          <span class="activity-time">{{ activity.time }}</span>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<style>
+  .dashboard {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .dashboard-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .gradient-text {
+    background: linear-gradient(45deg, #2c3e50, #3498db);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .subtitle {
+    color: #7f8c8d;
+    font-size: 1.1rem;
+  }
+
+  /* Stats Section */
+  .stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .stat-card {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .stat-icon {
+    font-size: 2rem;
+    color: #3498db;
+    background: #f0f7ff;
+    padding: 1rem;
+    border-radius: 12px;
+  }
+
+  .stat-content h3 {
+    font-size: 1rem;
+    color: #7f8c8d;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-number {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2c3e50;
+    margin: 0;
+  }
+
+  /* Quick Actions */
+  .quick-actions {
+    margin-bottom: 3rem;
+  }
+
+  .quick-actions h2 {
+    font-size: 1.8rem;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+  }
+
+  .action-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+
+  .action-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .action-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .card-content {
+    padding: 2rem;
+  }
+
+  .card-icon-wrapper {
+    width: 60px;
+    height: 60px;
+    background: #f0f7ff;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .card-icon-wrapper i {
+    font-size: 1.5rem;
+    color: #3498db;
+  }
+
+  .action-card h3 {
+    color: #2c3e50;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .action-card p {
+    color: #7f8c8d;
+    margin-bottom: 1.5rem;
+  }
+
+  .feature-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 0;
+  }
+
+  .feature-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #7f8c8d;
+    margin-bottom: 0.5rem;
+  }
+
+  .feature-list li i {
+    color: #2ecc71;
+    font-size: 0.9rem;
+  }
+
+  /* Recent Activity */
+  .recent-activity {
+    margin-bottom: 3rem;
+  }
+
+  .recent-activity h2 {
+    font-size: 1.8rem;
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+  }
+
+  .activity-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .activity-card {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .activity-icon {
+    width: 50px;
+    height: 50px;
+    background: #f0f7ff;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #3498db;
+  }
+
+  .activity-content {
+    flex: 1;
+  }
+
+  .activity-content h4 {
+    color: #2c3e50;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .activity-content p {
+    color: #7f8c8d;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .activity-time {
+    font-size: 0.9rem;
+    color: #95a5a6;
+  }
+
+  @media (max-width: 768px) {
+    .dashboard {
+      padding: 1rem;
+    }
+
+    .gradient-text {
+      font-size: 2rem;
+    }
+
+    .stats-container {
+      grid-template-columns: 1fr;
+    }
+
+    .action-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+{% endblock content %}

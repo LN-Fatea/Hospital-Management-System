@@ -1,0 +1,39 @@
+{% extends 'hospital/volunteer_base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">My Schedule</h5>
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">Date</th>
+                  <th scope="col">Start Time</th>
+                  <th scope="col">End Time</th>
+                  <th scope="col">Department</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for schedule in schedules %}
+                <tr>
+                  <td>{{schedule.date}}</td>
+                  <td>{{schedule.start_time}}</td>
+                  <td>{{schedule.end_time}}</td>
+                  <td>{{schedule.department}}</td>
+                  <td>{{schedule.status}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

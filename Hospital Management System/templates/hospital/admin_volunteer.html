@@ -1,0 +1,286 @@
+{% extends 'hospital/admin_base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="volunteer-dashboard">
+  <!-- Header Section -->
+  <div class="dashboard-header">
+    <h1 class="gradient-text">Volunteer Management</h1>
+    <p class="subtitle">Manage and coordinate volunteer activities efficiently</p>
+  </div>
+
+  <!-- Stats Overview -->
+  <div class="stats-container">
+    <div class="stat-card">
+      <i class="fas fa-users stat-icon"></i>
+      <div class="stat-content">
+        <h3>Total Volunteers</h3>
+        <p class="stat-number">{{ total_volunteers }}</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <i class="fas fa-clock stat-icon"></i>
+      <div class="stat-content">
+        <h3>Pending Approvals</h3>
+        <p class="stat-number">{{ pending_approvals }}</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <i class="fas fa-calendar-check stat-icon"></i>
+      <div class="stat-content">
+        <h3>Active This Week</h3>
+        <p class="stat-number">{{ active_volunteers }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Actions Grid -->
+  <div class="action-grid">
+    <!-- Add Volunteer Card -->
+    <div class="action-card add-volunteer">
+      <div class="card-content">
+        <div class="card-icon-wrapper">
+          <i class="fas fa-user-plus"></i>
+        </div>
+        <h2>Add Volunteer</h2>
+        <p>Register new volunteers in the system</p>
+        <ul class="feature-list">
+          <li><i class="fas fa-check"></i> Quick registration process</li>
+          <li><i class="fas fa-check"></i> Automatic email notifications</li>
+          <li><i class="fas fa-check"></i> Profile customization</li>
+        </ul>
+        <a href="{% url 'admin-add-volunteer' %}" class="action-button">
+          <span>Add New</span>
+          <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- View Volunteers Card -->
+    <div class="action-card view-volunteers">
+      <div class="card-content">
+        <div class="card-icon-wrapper">
+          <i class="fas fa-users"></i>
+        </div>
+        <h2>View Volunteers</h2>
+        <p>Manage existing volunteer records</p>
+        <ul class="feature-list">
+          <li><i class="fas fa-check"></i> Detailed volunteer profiles</li>
+          <li><i class="fas fa-check"></i> Activity tracking</li>
+          <li><i class="fas fa-check"></i> Performance metrics</li>
+        </ul>
+        <a href="{% url 'admin-view-volunteer' %}" class="action-button">
+          <span>View All</span>
+          <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Approve Volunteers Card -->
+    <div class="action-card approve-volunteers">
+      <div class="card-content">
+        <div class="card-icon-wrapper">
+          <i class="fas fa-user-check"></i>
+        </div>
+        <h2>Approve Volunteers</h2>
+        <p>Review and approve applications</p>
+        <ul class="feature-list">
+          <li><i class="fas fa-check"></i> Background verification</li>
+          <li><i class="fas fa-check"></i> Document validation</li>
+          <li><i class="fas fa-check"></i> Skill assessment</li>
+        </ul>
+        <a href="{% url 'admin-approve-volunteer' %}" class="action-button">
+          <span>Review</span>
+          <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .volunteer-dashboard {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .dashboard-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .gradient-text {
+    background: linear-gradient(45deg, #2c3e50, #3498db);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .subtitle {
+    color: #7f8c8d;
+    font-size: 1.1rem;
+  }
+
+  /* Stats Section */
+  .stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .stat-card {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .stat-icon {
+    font-size: 2rem;
+    color: #3498db;
+    background: #f0f7ff;
+    padding: 1rem;
+    border-radius: 12px;
+  }
+
+  .stat-content h3 {
+    font-size: 1rem;
+    color: #7f8c8d;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-number {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2c3e50;
+    margin: 0;
+  }
+
+  /* Action Cards */
+  .action-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+
+  .action-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .action-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .card-content {
+    padding: 2rem;
+  }
+
+  .card-icon-wrapper {
+    width: 60px;
+    height: 60px;
+    background: #f0f7ff;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .card-icon-wrapper i {
+    font-size: 1.5rem;
+    color: #3498db;
+  }
+
+  .action-card h2 {
+    color: #2c3e50;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .action-card p {
+    color: #7f8c8d;
+    margin-bottom: 1.5rem;
+  }
+
+  .feature-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1.5rem;
+  }
+
+  .feature-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #7f8c8d;
+    margin-bottom: 0.5rem;
+  }
+
+  .feature-list li i {
+    color: #2ecc71;
+    font-size: 0.9rem;
+  }
+
+  .action-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #3498db;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .action-button:hover {
+    background: #2980b9;
+    transform: translateX(5px);
+    color: white;
+    text-decoration: none;
+  }
+
+  .action-button i {
+    transition: transform 0.3s ease;
+  }
+
+  .action-button:hover i {
+    transform: translateX(5px);
+  }
+
+  @media (max-width: 768px) {
+    .volunteer-dashboard {
+      padding: 1rem;
+    }
+
+    .gradient-text {
+      font-size: 2rem;
+    }
+
+    .stats-container {
+      grid-template-columns: 1fr;
+    }
+
+    .action-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+{% endblock content %}

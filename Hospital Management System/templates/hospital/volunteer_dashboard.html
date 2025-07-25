@@ -1,0 +1,37 @@
+{% extends 'hospital/volunteer_base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Welcome {{ volunteerName }}</h5>
+          <p class="card-text">Your Department: {{ volunteer.department }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Schedule</h5>
+          <p class="card-text">You have {{ schedule_count }} upcoming shifts</p>
+          <a href="{% url 'volunteer-schedule' %}" class="btn btn-primary">View Schedule</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Tasks</h5>
+          <p class="card-text">You have {{ task_count }} pending tasks</p>
+          <a href="{% url 'volunteer-tasks' %}" class="btn btn-primary">View Tasks</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

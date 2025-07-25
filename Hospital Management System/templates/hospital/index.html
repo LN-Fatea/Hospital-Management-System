@@ -1,0 +1,217 @@
+{% extends 'hospital/homebase.html' %}
+{% load static %}
+
+{% block content %}
+<div class="hero-section">
+  <div class="hero-content">
+    <h1 class="hero-title gradient-text fade-in">Welcome to Hospital Management System</h1>
+    <p class="hero-subtitle fade-in">Providing Quality Healthcare Services</p>
+
+    <div class="login-cards">
+      <div class="login-card slide-in" onclick="window.location='adminclick'">
+        <i class="fas fa-user-shield card-icon"></i>
+        <h3 class="card-title">Admin</h3>
+        <p class="card-text">Hospital administration and management</p>
+        <a href="adminclick" class="card-link">Login</a>
+      </div>
+
+      <div class="login-card slide-in" onclick="window.location='doctorclick'" style="animation-delay: 0.2s;">
+        <i class="fas fa-user-md card-icon"></i>
+        <h3 class="card-title">Doctor</h3>
+        <p class="card-text">Manage patients and appointments</p>
+        <a href="doctorclick" class="card-link">Login</a>
+      </div>
+
+      <div class="login-card slide-in" onclick="window.location='patientclick'" style="animation-delay: 0.4s;">
+        <i class="fas fa-user card-icon"></i>
+        <h3 class="card-title">Patient</h3>
+        <p class="card-text">Book appointments and view records</p>
+        <a href="patientclick" class="card-link">Login</a>
+      </div>
+
+      <div class="login-card slide-in" onclick="window.location='volunteerclick'" style="animation-delay: 0.6s;">
+        <i class="fas fa-hands-helping card-icon"></i>
+        <h3 class="card-title">Volunteer</h3>
+        <p class="card-text">Join our community support team</p>
+        <a href="volunteerclick" class="card-link">Login</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="made-in-canada fade-in">
+    Made in Canada
+  </div>
+</div>
+
+{% block css %}
+<style>
+  .hero-section {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  @keyframes gradientBG {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .hero-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+    color: white;
+  }
+
+  .hero-title {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .hero-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 3rem;
+    opacity: 0.9;
+  }
+
+  .login-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+  }
+
+  .login-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+  }
+
+  .login-card:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .card-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: white;
+    transition: transform 0.3s ease;
+  }
+
+  .login-card:hover .card-icon {
+    transform: scale(1.1);
+  }
+
+  .card-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: white;
+  }
+
+  .card-text {
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 1.5rem;
+  }
+
+  .card-link {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .card-link:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .made-in-canada {
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: white;
+    font-size: 1rem;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+  }
+
+  /* Animation Classes */
+  .fade-in {
+    opacity: 0;
+    animation: fadeIn 1s ease forwards;
+  }
+
+  .slide-in {
+    opacity: 0;
+    transform: translateX(50px);
+    animation: slideIn 1s ease forwards;
+  }
+
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideIn {
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .gradient-text {
+    background: linear-gradient(45deg, #fff, #f0f0f0);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: none;
+  }
+
+  @media (max-width: 768px) {
+    .hero-title {
+      font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.2rem;
+    }
+
+    .login-cards {
+      grid-template-columns: 1fr;
+      padding: 1rem;
+    }
+  }
+</style>
+{% endblock %}
+{% endblock content %}
