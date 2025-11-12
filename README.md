@@ -5,7 +5,7 @@
 - If you have trouble installing Python Environment, check out tutorials online.
 - Open Terminal and Execute Following Commands:
 ```
-pip install django == 3.0.5
+pip install django==3.0.5
 pip install django-widget-tweaks
 pip install xhtml2pdf
 ```
