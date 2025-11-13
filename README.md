@@ -2,6 +2,7 @@
 
 ## HOW TO RUN THIS PROJECT
 - Install Python(3.7.6) (Do not Forget to Add to Path after or while installing Python).
+- Note: Do not use Python(3.14 or above). If your enviroment is already 3.14, create a 3.12 virtual environment.
 - If you have trouble installing Python Environment, check out tutorials online.
 - Open Terminal and Execute Following Commands:
 ```
